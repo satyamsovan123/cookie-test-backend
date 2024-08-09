@@ -7,11 +7,12 @@ const dotenv = require("dotenv");
 require("dotenv").config();
 
 // Works in local using browser and also in Postman
+// Does not sets cookie in browser when using http client module in angular running on localhost
 
 app.use(cookieParser());
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL,
+    origin: process.env.FRONTEND_URL_PROD,
     methods: ["GET"],
     exposedHeaders: process.env.ACCESS_TOKEN,
     credentials: true,
