@@ -80,5 +80,8 @@ app.get("/clear-cookie", (req, res) => {
 });
 
 app.listen(process.env.PORT, () => {
-  console.log(`Server is running on http://localhost:${process.env.PORT}`);
+  const deploymentMarker = 1;
+  console.log(
+    `Build # ${deploymentMarker}\nServer is running on ${process.env.PORT}`
+  );
 });
