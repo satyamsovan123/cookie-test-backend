@@ -6,6 +6,8 @@ const cors = require("cors");
 const dotenv = require("dotenv");
 require("dotenv").config();
 
+// Works in local using browser and also in Postman
+
 app.use(cookieParser());
 app.use(
   cors({
@@ -15,6 +17,17 @@ app.use(
     credentials: true,
   })
 );
+
+app.get("/api", (req, res) => {
+  try {
+    const message = "Hello";
+    console.log(message);
+    res.status(200).send({ message: message });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).send({ message: "Internal server error" });
+  }
+});
 
 app.get("/set-cookie", (req, res) => {
   try {
@@ -40,7 +53,7 @@ app.get("/set-cookie", (req, res) => {
 
 app.get("/verify-cookie", (req, res) => {
   try {
-    const message = "Veryfying cookie";
+    const message = "Verifying cookie";
     console.log(message);
     console.log("All cookies -", req.cookies);
     console.log("Access token -", req.cookies[process.env.ACCESS_TOKEN]);
