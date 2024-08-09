@@ -68,11 +68,22 @@ app.get("/verify-cookie", (req, res) => {
 app.get("/clear-cookie", (req, res) => {
   try {
     const message = "Clearing cookie";
+    const token = "";
     console.log(message);
-    return res
-      .clearCookie(process.env.ACCESS_TOKEN)
-      .status(200)
-      .send({ message: message });
+    return (
+      res
+        //.clearCookie(process.env.ACCESS_TOKEN)
+        .cookie(process.env.ACCESS_TOKEN, `${token}`, {
+          httpOnly: true,
+          secure: true,
+          sameSite: "none",
+          path: "/",
+          maxAge: 24 * 60 * 60 * 1000,
+        })
+        .setHeader(process.env.ACCESS_TOKEN, `${token}`)
+        .status(200)
+        .send({ message: message })
+    );
   } catch (error) {
     console.error(error);
     return res.status(500).send({ message: "Internal server error" });
